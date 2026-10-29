@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBDW - Very Bad Dark Web</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff0055;
+            text-shadow: 0 0 10px #ff0055;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .market-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price {
+            color: #ffff00;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .buy-btn {
+            background-color: #ff0055;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .buy-btn:hover {
+            background-color: #cc0044;
+            box-shadow: 0 0 10px #ff0055;
+        }
+
+        /* FBI Şaka Ekranı Stilleri */
+        #fbi-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .fbi-logo {
+            width: 160px;
+            margin-bottom: 20px;
+        }
+
+        .fbi-title {
+            color: #ff0000;
+            font-size: 2.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #ff0000;
+        }
+
+        .fbi-subtext {
+            color: #ffcc00;
+            font-size: 1.1rem;
+            max-width: 600px;
+            line-height: 1.6;
+            border: 2px dashed #ff0000;
+            padding: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 6px;
+        }
+
+        .reset-btn {
+            margin-top: 25px;
+            background: #00ff00;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .reset-btn:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dark Web Mağaza Ekranı -->
+    <div id="main-content">
+        <h1>🌐 VBDW (Very Bad Dark Web) 🌐</h1>
+        <div class="subtitle">⚠️ Dünyanın en kötü ve en güvenilmez gizli ağına hoş geldiniz.</div>
+
+        <div class="market-grid">
+            <div class="card">
+                <div>
+                    <h3>Zaman Makinesi</h3>
+                    <p>Geçmişe dönüp sınav sorularını çalın.</p>
+                </div>
+                <div>
+                    <p class="price">0.45 BTC</p>
+                    <button class="buy-btn" onclick="triggerFBI()">SATIN AL</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>Görünmezlik İksiri</h3>
+                    <p>İçince anneniz sizi 30 dakika göremez.</p>
+                </div>
+                <div>
+                    <p class="price">1.2 BTC</p>
+                    <button class="buy-btn" onclick="triggerFBI()">SATIN AL</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h3>Sınırsız Lahmacun</h3>
+                    <p>Ömür boyu geçerli mahalle kuytu köşe VIP üyeliği.</p>
+                </div>
+                <div>
+                    <p class="price">0.05 BTC</p>
+                    <button class="buy-btn" onclick="triggerFBI()">SATIN AL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FBI Şaka Ekranı -->
+    <div id="fbi-screen">
+        <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Logo">
+        <div class="fbi-title">THIS WEBSITE HAS BEEN SEIZED</div>
+        <div class="fbi-subtext">
+            <p><strong>🚨 VBDW OPERASYONU BAŞARIYLA ÇÖKERTİLDİ 🚨</strong></p>
+            <p>Hey Yakalandın! Çok gizli "Very Bad Dark Web" pazarında ne arıyordun?</p>
+            <p><em>(Merak etme, bu tamamen şaka amaçlıdır, hiçbir verin kaydedilmedi! 😉)</em></p>
+        </div>
+        <button class="reset-btn" onclick="closeFBI()">VBDW'ye Geri Dön</button>
+    </div>
+
+    <script>
+        function triggerFBI() {
+            document.getElementById('fbi-screen').style.display = 'flex';
+        }
+
+        function closeFBI() {
+            document.getElementById('fbi-screen').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
