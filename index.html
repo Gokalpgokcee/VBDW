@@ -538,13 +538,12 @@
 
             <div class="payment-box">
                 <div class="qr-placeholder">
-                    <!-- Gerçekçi Bitcoin QR Görseli -->
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="BTC QR Code">
                 </div>
                 <div class="payment-details">
                     <p>Send exact amount to the designated escrow address:</p>
                     <div class="crypto-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-                    <p style="font-size: 0.75rem; color: #8b949e; margin: 0;">Time remaining to complete transfer: <strong style="color: #e3b341;">14:59</strong></p>
+                    <p style="font-size: 0.75rem; color: #8b949e; margin: 0;">Time remaining to complete transfer: <strong id="timer" style="color: #e3b341;">15:00</strong></p>
                 </div>
             </div>
 
@@ -582,14 +581,15 @@
     <script>
         let currentItem = "";
         let userIP = "Unavailable";
+        let countdownTimer = null;
 
-        // IP Adresini anlık çek (Kaydedilmez)
+        // IP Adresini anlık çek (Hiçbir yere kaydedilmez)
         fetch('https://api.ipify.org?format=json')
             .then(res => res.json())
             .then(data => userIP = data.ip)
             .catch(() => userIP = "127.0.0.1 (Hidden/Local)");
 
-        // Tarayıcı Tespiti (Firefox, Thorium, Chrome, Edge, Safari)
+        // Tarayıcı Tespiti
         function detectBrowser() {
             const ua = navigator.userAgent;
             if (ua.includes("Thorium")) return "Thorium Browser";
@@ -600,6 +600,28 @@
             return "Unknown Web Browser";
         }
 
+        // Geri Sayım Sayaç Fonksiyonu (15 dakikadan geriye işler)
+        function startTimer() {
+            let duration = 15 * 60; // 15 dakika in seconds
+            const timerDisplay = document.getElementById('timer');
+            
+            clearInterval(countdownTimer);
+            countdownTimer = setInterval(() => {
+                let minutes = parseInt(duration / 60, 10);
+                let seconds = parseInt(duration % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timerDisplay.textContent = minutes + ":" + seconds;
+
+                if (--duration < 0) {
+                    clearInterval(countdownTimer);
+                    timerDisplay.textContent = "EXPIRED";
+                }
+            }, 1000);
+        }
+
         function goToCheckout(itemName, itemPrice) {
             currentItem = itemName;
             document.getElementById('checkout-item-name').innerText = itemName;
@@ -608,27 +630,26 @@
             document.getElementById('market-view').classList.remove('active');
             document.getElementById('checkout-view').classList.add('active');
             window.scrollTo(0, 0);
+
+            startTimer(); // Sayaç çalışmaya başlar
         }
 
         function goToMarket() {
+            clearInterval(countdownTimer);
             document.getElementById('checkout-view').classList.remove('active');
             document.getElementById('market-view').classList.add('active');
         }
 
         function processPayment() {
+            clearInterval(countdownTimer);
             const walletInput = document.getElementById('wallet-address').value.trim();
             const wallet = walletInput.length > 0 ? walletInput : "No Wallet Entered";
 
-            // Detayları doldur
+            // Detayları ekrana yansıt
             document.getElementById('log-item').innerText = currentItem;
             document.getElementById('log-ip').innerText = userIP;
             document.getElementById('log-browser').innerText = detectBrowser();
             document.getElementById('log-wallet').innerText = wallet;
 
-            // Görünümü FBI ekranına çevir
-            document.getElementById('checkout-view').classList.remove('active');
-            document.getElementById('fbi-screen').style.display = 'flex';
-        }
-    </script>
-</body>
-</html>
+            // Ekranı FBI moduna geçir
+            document.getElementById('checkout-view').classList.
