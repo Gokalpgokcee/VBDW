@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VBDW // Secure Data Marketplace v4.2</title>
+    <title>VBDW // Peer-to-Peer Exchange</title>
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #141414;
-            --border-color: #262626;
-            --text-main: #e5e5e5;
-            --text-muted: #737373;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent: #238636;
+            --accent-hover: #2ea043;
+            --link-color: #58a6ff;
         }
 
         body {
@@ -26,127 +27,151 @@
 
         header {
             border-bottom: 1px solid var(--border-color);
-            padding: 20px 40px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #0f0f0f;
+            background-color: #010409;
         }
 
         .logo-area {
             font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
             color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .status-badge {
-            font-size: 0.8rem;
-            color: #22c55e;
-            background: rgba(34, 197, 94, 0.1);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(34, 197, 94, 0.2);
+        .node-status {
+            font-size: 0.75rem;
+            color: #3fb950;
+            background: rgba(63, 185, 80, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(63, 185, 80, 0.3);
         }
 
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
+            max-width: 1000px;
+            margin: 30px auto;
             padding: 0 20px;
         }
 
-        .hero {
-            margin-bottom: 40px;
-        }
-
-        .hero h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .item-card {
+        .search-bar {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
+            padding: 12px 20px;
             border-radius: 6px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: border-color 0.2s;
-        }
-
-        .item-card:hover {
-            border-color: #404040;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .item-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .item-category {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .item-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .item-footer {
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .listings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .listing-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.15s ease;
+        }
+
+        .listing-card:hover {
+            border-color: #8b949e;
+        }
+
+        .listing-info {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .listing-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .category-tag {
+            font-size: 0.7rem;
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--link-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .listing-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin: 0;
+        }
+
+        .listing-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 4px 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .seller-info {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .seller-name {
+            color: var(--link-color);
+            font-weight: 500;
+        }
+
+        .listing-action {
+            text-align: right;
+            min-width: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 8px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 20px;
         }
 
         .price {
             font-family: monospace;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 700;
             color: #fff;
-            font-weight: 600;
         }
 
-        .purchase-btn {
+        .buy-btn {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 7px 16px;
+            border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.15s;
+            width: 100%;
         }
 
-        .purchase-btn:hover {
+        .buy-btn:hover {
             background-color: var(--accent-hover);
         }
 
@@ -170,13 +195,13 @@
         }
 
         .fbi-logo {
-            width: 140px;
+            width: 130px;
             margin-bottom: 25px;
         }
 
         .fbi-title {
             color: #ef4444;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: 1px;
             margin-bottom: 15px;
@@ -186,17 +211,17 @@
         .fbi-box {
             border: 1px solid #333;
             background: #0d0d0d;
-            max-width: 600px;
-            padding: 30px;
+            max-width: 550px;
+            padding: 25px;
             border-radius: 4px;
             text-align: left;
             line-height: 1.6;
         }
 
         .fbi-box p {
-            margin: 0 0 15px 0;
+            margin: 0 0 12px 0;
             color: #d4d4d4;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .fbi-box p:last-child {
@@ -204,16 +229,16 @@
         }
 
         .joke-highlight {
-            color: #22c55e;
+            color: #3fb950;
             font-weight: 600;
         }
 
         .exit-btn {
-            margin-top: 30px;
+            margin-top: 25px;
             background: transparent;
             color: var(--text-muted);
             border: 1px solid var(--border-color);
-            padding: 8px 16px;
+            padding: 7px 14px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -227,63 +252,73 @@
 </head>
 <body>
 
-    <!-- Ana Ciddi Panel -->
+    <!-- Üst Bilgi / Sahibinden Tarzı Header -->
     <header>
-        <div class="logo-area">VBDW // ENCRYPTED NODE</div>
-        <div class="status-badge">● System Operational</div>
+        <div class="logo-area">
+            <span>VBDW</span>
+            <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Peer Classifieds</span>
+        </div>
+        <div class="node-status">Active Node: EU-Central</div>
     </header>
 
     <div class="container">
-        <div class="hero">
-            <h1>Verified Data Index</h1>
-            <p>Authorized anonymous asset acquisition and descriptor portal.</p>
+        <!-- Arama / Filtre Alanı -->
+        <div class="search-bar">
+            <span>Aktif İlan Listesi (Toplam 3 İlan)</span>
+            <span>Sıralama: En Yeni</span>
         </div>
 
-        <div class="grid">
-            <!-- Ürün 1 -->
-            <div class="item-card">
-                <div>
-                    <div class="item-header">
-                        <h3 class="item-title">Global ISP DNS Logs (2025-2026)</h3>
+        <!-- İlanlar Listesi -->
+        <div class="listings-list">
+
+            <!-- İlan 1 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Logs & Dumps</span>
+                        <h3 class="listing-title">Local University Student Database Dump (2025)</h3>
                     </div>
-                    <div class="item-category">Database Dump</div>
-                    <p class="item-desc">Compressed regional routing logs and regional query metadata archive.</p>
+                    <p class="listing-desc">Geçen döneme ait öğrenir işleri ve ders kayıt loglarının şifrelenmemiş yedeği. SQL formatında.</p>
+                    <div class="seller-info">Satıcı: <span class="seller-name">null_pointer_99</span> • 3 saat önce listelendi</div>
                 </div>
-                <div class="item-footer">
-                    <span class="price">0.14 BTC</span>
-                    <button class="purchase-btn" onclick="triggerFBI()">Acquire</button>
+                <div class="listing-action">
+                    <span class="price">0.05 BTC</span>
+                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
                 </div>
             </div>
 
-            <!-- Ürün 2 -->
-            <div class="item-card">
-                <div>
-                    <div class="item-header">
-                        <h3 class="item-title">Encrypted Credentials Bundle #48</h3>
+            <!-- İlan 2 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Access</span>
+                        <h3 class="listing-title">Verified ISP Router Master Gateway Credentials</h3>
                     </div>
-                    <div class="item-category">Credential List</div>
-                    <p class="item-desc">Verified active sessions and token descriptors extracted from legacy nodes.</p>
+                    <p class="listing-desc">Bölgesel fiber altyapı test node'larına ait aktif SSH erişim anahtarları. Toplu paket.</p>
+                    <div class="seller-info">Satıcı: <span class="seller-name">shadow_broker_x</span> • Dün listelendi</div>
                 </div>
-                <div class="item-footer">
-                    <span class="price">0.08 BTC</span>
-                    <button class="purchase-btn" onclick="triggerFBI()">Acquire</button>
+                <div class="listing-action">
+                    <span class="price">0.18 BTC</span>
+                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
                 </div>
             </div>
 
-            <!-- Ürün 3 -->
-            <div class="item-card">
-                <div>
-                    <div class="item-header">
-                        <h3 class="item-title">Corporate Internal API Keys</h3>
+            <!-- İlan 3 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Tokens</span>
+                        <h3 class="listing-title">Automated Game Bot API Token Havuzu</h3>
                     </div>
-                    <div class="item-category">Source Material</div>
-                    <p class="item-desc">High-privilege webhook tokens and gateway access credentials.</p>
+                    <p class="listing-desc">Çeşitli MMORPG sunucularında test amaçlı kullanılan yüksek yetkili API webhook listesi.</p>
+                    <div class="seller-info">Satıcı: <span class="seller-name">root_admin_tr</span> • 2 gün önce listelendi</div>
                 </div>
-                <div class="item-footer">
-                    <span class="price">0.32 BTC</span>
-                    <button class="purchase-btn" onclick="triggerFBI()">Acquire</button>
+                <div class="listing-action">
+                    <span class="price">0.02 BTC</span>
+                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -292,11 +327,11 @@
         <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Logo">
         <div class="fbi-title">THIS DOMAIN HAS BEEN SEIZED</div>
         <div class="fbi-box">
-            <p>Federal Bureau of Investigation ve Uluslararası Siber Güvenlik Birimleri koordinasyonuyla bu altyapı çökertilmiştir.</p>
-            <p>IP adresiniz, oturum verileriniz ve tarayıcı izleriniz güvenlik birimlerimiz tarafından kayıt altına alınmıştır.</p>
-            <p class="joke-highlight">--- ŞAKA! Sakin ol, bu tamamen mizah amaçlı yazılmış bir test sitesidir. Hiçbir verin gitmedi, rahat ol! 😉 ---</p>
+            <p>Federal Bureau of Investigation ve uluslararası siber suçlar birimi tarafından bu alan adı ve bağlı ilan sunucuları operasyonel olarak kapatılmıştır.</p>
+            <p>Yapmış olduğunuz işlem denetlenmiş ve tarayıcı oturum bilgileriniz kayıt altına alınmıştır.</p>
+            <p class="joke-highlight">--- ŞAKA! Sakin ol, arkadaşına yapmak istediğin şaka için buradayız. Hiçbir verin gitmedi, güvenle kapatabilirsin! 😉 ---</p>
         </div>
-        <button class="exit-btn" onclick="closeFBI()">Panele Geri Dön</button>
+        <button class="exit-btn" onclick="closeFBI()">İlanlara Geri Dön</button>
     </div>
 
     <script>
