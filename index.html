@@ -25,7 +25,7 @@
             box-sizing: border-box;
         }
 
-        /* Views management */
+        /* Sayfa Görünüm Yönetimi */
         .page-view {
             display: none;
         }
@@ -94,11 +94,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: border-color 0.15s ease;
-        }
-
-        .listing-card:hover {
-            border-color: #8b949e;
         }
 
         .listing-info {
@@ -175,7 +170,6 @@
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.15s;
             width: 100%;
         }
 
@@ -183,7 +177,7 @@
             background-color: var(--accent-hover);
         }
 
-        /* --- Full Page Checkout Style --- */
+        /* Ödeme Sayfası Tasarımı */
         .checkout-container {
             max-width: 700px;
             margin: 40px auto;
@@ -239,14 +233,12 @@
         }
 
         .qr-placeholder {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             background: #fff;
-            padding: 8px;
+            padding: 6px;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-shrink: 0;
         }
 
         .qr-placeholder img {
@@ -270,7 +262,7 @@
             padding: 8px 10px;
             border: 1px solid var(--border-color);
             color: #58a6ff;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             border-radius: 4px;
             word-break: break-all;
             margin-bottom: 12px;
@@ -310,15 +302,13 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: background-color 0.15s;
         }
 
         .confirm-payment-btn:hover {
             background-color: var(--accent-hover);
         }
 
-
-        /* --- FBI Interception Screen --- */
+        /* FBI Baskın Ekranı */
         #fbi-screen {
             display: none;
             position: fixed;
@@ -386,9 +376,7 @@
             padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.85rem;
         }
-
         .exit-btn:hover {
             color: #fff;
             border-color: #666;
@@ -397,7 +385,7 @@
 </head>
 <body>
 
-    <!-- VIEW 1: Main Market View -->
+    <!-- MARKET SAYFASI -->
     <div id="market-view" class="page-view active">
         <header>
             <div class="logo-area">
@@ -409,12 +397,11 @@
 
         <div class="container">
             <div class="search-bar">
-                <span>Active Listings (6 Verified Items)</span>
+                <span>Active Listings (3 Verified Items)</span>
                 <span>Sort: Most Recent</span>
             </div>
 
             <div class="listings-list">
-                <!-- Item 1 -->
                 <div class="listing-card">
                     <div class="listing-info">
                         <div class="listing-top">
@@ -426,11 +413,10 @@
                     </div>
                     <div class="listing-action">
                         <span class="price">0.045 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Educational Institution Records & Access Logs', '0.045 BTC')">Acquire Item</button>
+                        <button class="buy-btn" onclick="openCheckout('Educational Institution Records & Access Logs', '0.045 BTC')">Acquire Item</button>
                     </div>
                 </div>
 
-                <!-- Item 2 -->
                 <div class="listing-card">
                     <div class="listing-info">
                         <div class="listing-top">
@@ -442,11 +428,10 @@
                     </div>
                     <div class="listing-action">
                         <span class="price">0.120 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Regional Fiber Gateway SSH Keypair', '0.120 BTC')">Acquire Item</button>
+                        <button class="buy-btn" onclick="openCheckout('Regional Fiber Gateway SSH Keypair', '0.120 BTC')">Acquire Item</button>
                     </div>
                 </div>
 
-                <!-- Item 3 -->
                 <div class="listing-card">
                     <div class="listing-info">
                         <div class="listing-top">
@@ -458,63 +443,14 @@
                     </div>
                     <div class="listing-action">
                         <span class="price">0.018 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Automated High-Volume Game Server Token List', '0.018 BTC')">Acquire Item</button>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="listing-card">
-                    <div class="listing-info">
-                        <div class="listing-top">
-                            <span class="category-tag">Credentials</span>
-                            <h3 class="listing-title">Corporate VPN Access Tokens & Session Cookies</h3>
-                        </div>
-                        <p class="listing-desc">Freshly harvested internal portal cookies and dual-factor session bypass configs.</p>
-                        <div class="seller-info">Seller: <span class="seller-name">Anon_Ghost_1042</span> • 1 day ago</div>
-                    </div>
-                    <div class="listing-action">
-                        <span class="price">0.085 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Corporate VPN Access Tokens & Session Cookies', '0.085 BTC')">Acquire Item</button>
-                    </div>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="listing-card">
-                    <div class="listing-info">
-                        <div class="listing-top">
-                            <span class="category-tag">Source Code</span>
-                            <h3 class="listing-title">Proprietary Anticheat Bypass Driver (.sys)</h3>
-                        </div>
-                        <p class="listing-desc">Kernel-mode ring0 driver source for memory manipulation and hook suppression.</p>
-                        <div class="seller-info">Seller: <span class="seller-name">Anon_Dev_5521</span> • 2 days ago</div>
-                    </div>
-                    <div class="listing-action">
-                        <span class="price">0.250 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Proprietary Anticheat Bypass Driver (.sys)', '0.250 BTC')">Acquire Item</button>
-                    </div>
-                </div>
-
-                <!-- Item 6 -->
-                <div class="listing-card">
-                    <div class="listing-info">
-                        <div class="listing-top">
-                            <span class="category-tag">Logs</span>
-                            <h3 class="listing-title">Global Public DNS Cache & Query Records</h3>
-                        </div>
-                        <p class="listing-desc">Cleaned telemetry logs containing regional request histories and endpoint mappings.</p>
-                        <div class="seller-info">Seller: <span class="seller-name">Anon_Node_3319</span> • 3 days ago</div>
-                    </div>
-                    <div class="listing-action">
-                        <span class="price">0.030 BTC</span>
-                        <button class="buy-btn" onclick="goToCheckout('Global Public DNS Cache & Query Records', '0.030 BTC')">Acquire Item</button>
+                        <button class="buy-btn" onclick="openCheckout('Automated High-Volume Game Server Token List', '0.018 BTC')">Acquire Item</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- VIEW 2: Full Page Checkout Gateway -->
+    <!-- ÖDEME SAYFASI -->
     <div id="checkout-view" class="page-view">
         <header>
             <div class="logo-area">
@@ -527,37 +463,36 @@
         <div class="checkout-container">
             <div class="checkout-header">
                 <h2>Secure Escrow Transaction</h2>
-                <a class="back-link" onclick="goToMarket()">← Cancel & Return</a>
+                <a class="back-link" onclick="returnToMarket()">← Cancel & Return</a>
             </div>
 
             <div class="order-summary">
-                <strong>Selected Asset:</strong> <span id="checkout-item-name" style="color: #fff;">-</span><br>
+                <strong>Selected Asset:</strong> <span id="item-name-display" style="color: #fff;">-</span><br>
                 <strong>Escrow Fee:</strong> <span style="color: #fff;">Included</span><br>
-                <strong>Total Amount Required:</strong> <span id="checkout-item-price" style="color: #58a6ff; font-family: monospace; font-weight: bold;">-</span>
+                <strong>Total Amount Required:</strong> <span id="item-price-display" style="color: #58a6ff; font-family: monospace; font-weight: bold;">-</span>
             </div>
 
             <div class="payment-box">
                 <div class="qr-placeholder">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="BTC QR Code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="BTC QR Code">
                 </div>
                 <div class="payment-details">
                     <p>Send exact amount to the designated escrow address:</p>
                     <div class="crypto-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-                    <p style="font-size: 0.75rem; color: #8b949e; margin: 0;">Time remaining to complete transfer: <strong id="timer" style="color: #e3b341;">15:00</strong></p>
+                    <p style="font-size: 0.75rem; color: #8b949e; margin: 0;">Time remaining: <strong id="timer" style="color: #e3b341;">15:00</strong></p>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="wallet-address">Enter your Bitcoin Refund / Source Address for Verification:</label>
-                <input type="text" id="wallet-address" placeholder="e.g. bc1q... or 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" required>
+                <label for="wallet-input">Enter your Bitcoin Refund / Source Address for Verification:</label>
+                <input type="text" id="wallet-input" placeholder="e.g. bc1q... or 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" required>
             </div>
 
-            <button class="confirm-payment-btn" onclick="processPayment()">Verify & Broadcast Transaction</button>
+            <button class="confirm-payment-btn" onclick="triggerFBI()">Verify & Broadcast Transaction</button>
         </div>
     </div>
 
-
-    <!-- VIEW 3: FBI Interception Screen -->
+    <!-- FBI BASKIN EKRANI -->
     <div id="fbi-screen">
         <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Seal">
         <div class="fbi-title">THIS DOMAIN HAS BEEN SEIZED</div>
@@ -579,18 +514,18 @@
     </div>
 
     <script>
-        let currentItem = "";
-        let userIP = "Unavailable";
-        let countdownTimer = null;
+        let selectedItemName = "";
+        let clientIP = "Fetching...";
+        let countdownInterval = null;
 
-        // IP Adresini anlık çek (Hiçbir yere kaydedilmez)
+        // IP adresini arka planda güvenle çek (Hiçbir yere kaydedilmez)
         fetch('https://api.ipify.org?format=json')
             .then(res => res.json())
-            .then(data => userIP = data.ip)
-            .catch(() => userIP = "127.0.0.1 (Hidden/Local)");
+            .then(data => clientIP = data.ip)
+            .catch(() => clientIP = "127.0.0.1 (Local Node)");
 
         // Tarayıcı Tespiti
-        function detectBrowser() {
+        function getBrowserName() {
             const ua = navigator.userAgent;
             if (ua.includes("Thorium")) return "Thorium Browser";
             if (ua.includes("Firefox")) return "Mozilla Firefox";
@@ -600,56 +535,51 @@
             return "Unknown Web Browser";
         }
 
-        // Geri Sayım Sayaç Fonksiyonu (15 dakikadan geriye işler)
-        function startTimer() {
-            let duration = 15 * 60; // 15 dakika in seconds
-            const timerDisplay = document.getElementById('timer');
-            
-            clearInterval(countdownTimer);
-            countdownTimer = setInterval(() => {
-                let minutes = parseInt(duration / 60, 10);
-                let seconds = parseInt(duration % 60, 10);
+        // Ödeme Sayfasına Geçiş Fonksiyonu
+        function openCheckout(itemName, itemPrice) {
+            selectedItemName = itemName;
+            document.getElementById('item-name-display').innerText = itemName;
+            document.getElementById('item-price-display').innerText = itemPrice;
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                timerDisplay.textContent = minutes + ":" + seconds;
-
-                if (--duration < 0) {
-                    clearInterval(countdownTimer);
-                    timerDisplay.textContent = "EXPIRED";
-                }
-            }, 1000);
-        }
-
-        function goToCheckout(itemName, itemPrice) {
-            currentItem = itemName;
-            document.getElementById('checkout-item-name').innerText = itemName;
-            document.getElementById('checkout-item-price').innerText = itemPrice;
-
+            // Görünüm değiştir
             document.getElementById('market-view').classList.remove('active');
             document.getElementById('checkout-view').classList.add('active');
             window.scrollTo(0, 0);
 
-            startTimer(); // Sayaç çalışmaya başlar
+            startCountdown();
         }
 
-        function goToMarket() {
-            clearInterval(countdownTimer);
+        // Markete Geri Dönüş
+        function returnToMarket() {
+            clearInterval(countdownInterval);
             document.getElementById('checkout-view').classList.remove('active');
             document.getElementById('market-view').classList.add('active');
         }
 
-        function processPayment() {
-            clearInterval(countdownTimer);
-            const walletInput = document.getElementById('wallet-address').value.trim();
-            const wallet = walletInput.length > 0 ? walletInput : "No Wallet Entered";
+        // Geri Sayım Sayacı
+        function startCountdown() {
+            let timeLeft = 15 * 60;
+            const timerEl = document.getElementById('timer');
+            
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                m = m < 10 ? "0" + m : m;
+                s = s < 10 ? "0" + s : s;
+                timerEl.textContent = m + ":" + s;
 
-            // Detayları ekrana yansıt
-            document.getElementById('log-item').innerText = currentItem;
-            document.getElementById('log-ip').innerText = userIP;
-            document.getElementById('log-browser').innerText = detectBrowser();
-            document.getElementById('log-wallet').innerText = wallet;
+                if (--timeLeft < 0) {
+                    clearInterval(countdownInterval);
+                    timerEl.textContent = "EXPIRED";
+                }
+            }, 1000);
+        }
 
-            // Ekranı FBI moduna geçir
-            document.getElementById('checkout-view').classList.
+        // Ödeme Onaylandığında FBI Ekranını Tetikle
+        function triggerFBI() {
+            clearInterval(countdownInterval);
+            const userWallet = document.getElementById('wallet-input').value.trim();
+            const finalWallet = userWallet.length > 0 ? userWallet : "No Wallet Entered";
+
+            // Bilgileri
