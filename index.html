@@ -25,6 +25,14 @@
             box-sizing: border-box;
         }
 
+        /* Views management */
+        .page-view {
+            display: none;
+        }
+        .page-view.active {
+            display: block;
+        }
+
         header {
             border-bottom: 1px solid var(--border-color);
             padding: 15px 30px;
@@ -175,71 +183,142 @@
             background-color: var(--accent-hover);
         }
 
-        /* Modal / Crypto Wallet Entry */
-        #payment-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 8000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-box {
+        /* --- Full Page Checkout Style --- */
+        .checkout-container {
+            max-width: 700px;
+            margin: 40px auto;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 25px;
             border-radius: 8px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 30px;
         }
 
-        .modal-box h3 {
-            margin-top: 0;
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .checkout-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
             color: #fff;
         }
 
-        .modal-box label {
+        .back-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .order-summary {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .payment-box {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .qr-placeholder {
+            width: 140px;
+            height: 140px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-placeholder img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .payment-details {
+            flex: 1;
+        }
+
+        .payment-details p {
+            margin: 0 0 8px 0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .crypto-address {
+            font-family: monospace;
+            background: #161b22;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            color: #58a6ff;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        .form-group label {
             display: block;
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
-        .modal-box input {
+        .form-group input {
             width: 100%;
             padding: 10px;
             background: #0d1117;
             border: 1px solid var(--border-color);
             color: #fff;
-            border-radius: 4px;
+            border-radius: 6px;
             box-sizing: border-box;
             font-family: monospace;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .cancel-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 8px 14px;
-            border-radius: 4px;
+        .confirm-payment-btn {
+            margin-top: 20px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
+            width: 100%;
+            transition: background-color 0.15s;
         }
 
-        /* FBI Interception Screen */
+        .confirm-payment-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+
+        /* --- FBI Interception Screen --- */
         #fbi-screen {
             display: none;
             position: fixed;
@@ -318,138 +397,168 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <span>VBDW</span>
-            <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Encrypted Peer Network</span>
-        </div>
-        <div class="node-status">Active Node: EU-Central</div>
-    </header>
+    <!-- VIEW 1: Main Market View -->
+    <div id="market-view" class="page-view active">
+        <header>
+            <div class="logo-area">
+                <span>VBDW</span>
+                <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Encrypted Peer Network</span>
+            </div>
+            <div class="node-status">Active Node: EU-Central</div>
+        </header>
 
-    <div class="container">
-        <div class="search-bar">
-            <span>Active Listings (6 Verified Items)</span>
-            <span>Sort: Most Recent</span>
-        </div>
-
-        <div class="listings-list">
-
-            <!-- Item 1 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">Database</span>
-                        <h3 class="listing-title">Educational Institution Records & Access Logs</h3>
-                    </div>
-                    <p class="listing-desc">Unencrypted backup of administrative databases and internal log registries. SQL dump format.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_Node_9912</span> • 2 hours ago</div>
-                </div>
-                <div class="listing-action">
-                    <span class="price">0.045 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Educational Institution Records & Access Logs')">Acquire Item</button>
-                </div>
+        <div class="container">
+            <div class="search-bar">
+                <span>Active Listings (6 Verified Items)</span>
+                <span>Sort: Most Recent</span>
             </div>
 
-            <!-- Item 2 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">Infrastructure</span>
-                        <h3 class="listing-title">Regional Fiber Gateway SSH Keypair</h3>
+            <div class="listings-list">
+                <!-- Item 1 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">Database</span>
+                            <h3 class="listing-title">Educational Institution Records & Access Logs</h3>
+                        </div>
+                        <p class="listing-desc">Unencrypted backup of administrative databases and internal log registries. SQL dump format.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_Node_9912</span> • 2 hours ago</div>
                     </div>
-                    <p class="listing-desc">Privileged credential set for maintenance nodes and ISP terminal routing units.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_User_0481</span> • 5 hours ago</div>
-                </div>
-                <div class="listing-action">
-                    <span class="price">0.120 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Regional Fiber Gateway SSH Keypair')">Acquire Item</button>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">API Access</span>
-                        <h3 class="listing-title">Automated High-Volume Game Server Token List</h3>
+                    <div class="listing-action">
+                        <span class="price">0.045 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Educational Institution Records & Access Logs', '0.045 BTC')">Acquire Item</button>
                     </div>
-                    <p class="listing-desc">Active session descriptors and high-permission webhooks for legacy MMORPG backends.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_Peer_7730</span> • 1 day ago</div>
                 </div>
-                <div class="listing-action">
-                    <span class="price">0.018 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Automated High-Volume Game Server Token List')">Acquire Item</button>
-                </div>
-            </div>
 
-            <!-- Item 4 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">Credentials</span>
-                        <h3 class="listing-title">Corporate VPN Access Tokens & Session Cookies</h3>
+                <!-- Item 2 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">Infrastructure</span>
+                            <h3 class="listing-title">Regional Fiber Gateway SSH Keypair</h3>
+                        </div>
+                        <p class="listing-desc">Privileged credential set for maintenance nodes and ISP terminal routing units.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_User_0481</span> • 5 hours ago</div>
                     </div>
-                    <p class="listing-desc">Freshly harvested internal portal cookies and dual-factor session bypass configs.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_Ghost_1042</span> • 1 day ago</div>
-                </div>
-                <div class="listing-action">
-                    <span class="price">0.085 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Corporate VPN Access Tokens & Session Cookies')">Acquire Item</button>
-                </div>
-            </div>
-
-            <!-- Item 5 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">Source Code</span>
-                        <h3 class="listing-title">Proprietary Anticheat Bypass Driver (.sys)</h3>
+                    <div class="listing-action">
+                        <span class="price">0.120 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Regional Fiber Gateway SSH Keypair', '0.120 BTC')">Acquire Item</button>
                     </div>
-                    <p class="listing-desc">Kernel-mode ring0 driver source for memory manipulation and hook suppression.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_Dev_5521</span> • 2 days ago</div>
                 </div>
-                <div class="listing-action">
-                    <span class="price">0.250 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Proprietary Anticheat Bypass Driver (.sys)')">Acquire Item</button>
-                </div>
-            </div>
 
-            <!-- Item 6 -->
-            <div class="listing-card">
-                <div class="listing-info">
-                    <div class="listing-top">
-                        <span class="category-tag">Logs</span>
-                        <h3 class="listing-title">Global Public DNS Cache & Query Records</h3>
+                <!-- Item 3 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">API Access</span>
+                            <h3 class="listing-title">Automated High-Volume Game Server Token List</h3>
+                        </div>
+                        <p class="listing-desc">Active session descriptors and high-permission webhooks for legacy MMORPG backends.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_Peer_7730</span> • 1 day ago</div>
                     </div>
-                    <p class="listing-desc">Cleaned telemetry logs containing regional request histories and endpoint mappings.</p>
-                    <div class="seller-info">Seller: <span class="seller-name">Anon_Node_3319</span> • 3 days ago</div>
+                    <div class="listing-action">
+                        <span class="price">0.018 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Automated High-Volume Game Server Token List', '0.018 BTC')">Acquire Item</button>
+                    </div>
                 </div>
-                <div class="listing-action">
-                    <span class="price">0.030 BTC</span>
-                    <button class="buy-btn" onclick="openPayment('Global Public DNS Cache & Query Records')">Acquire Item</button>
+
+                <!-- Item 4 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">Credentials</span>
+                            <h3 class="listing-title">Corporate VPN Access Tokens & Session Cookies</h3>
+                        </div>
+                        <p class="listing-desc">Freshly harvested internal portal cookies and dual-factor session bypass configs.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_Ghost_1042</span> • 1 day ago</div>
+                    </div>
+                    <div class="listing-action">
+                        <span class="price">0.085 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Corporate VPN Access Tokens & Session Cookies', '0.085 BTC')">Acquire Item</button>
+                    </div>
                 </div>
-            </div>
 
-        </div>
-    </div>
+                <!-- Item 5 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">Source Code</span>
+                            <h3 class="listing-title">Proprietary Anticheat Bypass Driver (.sys)</h3>
+                        </div>
+                        <p class="listing-desc">Kernel-mode ring0 driver source for memory manipulation and hook suppression.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_Dev_5521</span> • 2 days ago</div>
+                    </div>
+                    <div class="listing-action">
+                        <span class="price">0.250 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Proprietary Anticheat Bypass Driver (.sys)', '0.250 BTC')">Acquire Item</button>
+                    </div>
+                </div>
 
-    <!-- Payment Modal -->
-    <div id="payment-modal">
-        <div class="modal-box">
-            <h3>Escrow Checkout</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
-                Enter your BTC wallet address below to initialize the automated escrow transaction.
-            </p>
-            <label for="wallet-address">Bitcoin Refund / Source Address:</label>
-            <input type="text" id="wallet-address" placeholder="bc1q..." required>
-            <div class="modal-actions">
-                <button class="cancel-btn" onclick="closePayment()">Cancel</button>
-                <button class="buy-btn" style="width: auto;" onclick="processPayment()">Confirm & Pay</button>
+                <!-- Item 6 -->
+                <div class="listing-card">
+                    <div class="listing-info">
+                        <div class="listing-top">
+                            <span class="category-tag">Logs</span>
+                            <h3 class="listing-title">Global Public DNS Cache & Query Records</h3>
+                        </div>
+                        <p class="listing-desc">Cleaned telemetry logs containing regional request histories and endpoint mappings.</p>
+                        <div class="seller-info">Seller: <span class="seller-name">Anon_Node_3319</span> • 3 days ago</div>
+                    </div>
+                    <div class="listing-action">
+                        <span class="price">0.030 BTC</span>
+                        <button class="buy-btn" onclick="goToCheckout('Global Public DNS Cache & Query Records', '0.030 BTC')">Acquire Item</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- FBI Interception Screen -->
+
+    <!-- VIEW 2: Full Page Checkout Gateway -->
+    <div id="checkout-view" class="page-view">
+        <header>
+            <div class="logo-area">
+                <span>VBDW</span>
+                <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Escrow Gateway</span>
+            </div>
+            <div class="node-status" style="color: #e3b341; background: rgba(227,179,65,0.1); border-color: rgba(227,179,65,0.3);">● Awaiting Payment</div>
+        </header>
+
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h2>Secure Escrow Transaction</h2>
+                <a class="back-link" onclick="goToMarket()">← Cancel & Return</a>
+            </div>
+
+            <div class="order-summary">
+                <strong>Selected Asset:</strong> <span id="checkout-item-name" style="color: #fff;">-</span><br>
+                <strong>Escrow Fee:</strong> <span style="color: #fff;">Included</span><br>
+                <strong>Total Amount Required:</strong> <span id="checkout-item-price" style="color: #58a6ff; font-family: monospace; font-weight: bold;">-</span>
+            </div>
+
+            <div class="payment-box">
+                <div class="qr-placeholder">
+                    <!-- Gerçekçi Bitcoin QR Görseli -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="BTC QR Code">
+                </div>
+                <div class="payment-details">
+                    <p>Send exact amount to the designated escrow address:</p>
+                    <div class="crypto-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+                    <p style="font-size: 0.75rem; color: #8b949e; margin: 0;">Time remaining to complete transfer: <strong style="color: #e3b341;">14:59</strong></p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="wallet-address">Enter your Bitcoin Refund / Source Address for Verification:</label>
+                <input type="text" id="wallet-address" placeholder="e.g. bc1q... or 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" required>
+            </div>
+
+            <button class="confirm-payment-btn" onclick="processPayment()">Verify & Broadcast Transaction</button>
+        </div>
+    </div>
+
+
+    <!-- VIEW 3: FBI Interception Screen -->
     <div id="fbi-screen">
         <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Seal">
         <div class="fbi-title">THIS DOMAIN HAS BEEN SEIZED</div>
@@ -465,11 +574,9 @@
                 • Status: SEIZED & RECORDED
             </div>
 
-            <p style="color: #3fb950; font-weight: 600; margin-top: 15px;">
-                --- PRANK ALERT! Relax, this is a joke website. None of your data was stored or transmitted anywhere! 😉 ---
-            </p>
+            <p style="margin: 0;">All connection metadata, logs, and cryptographic identifiers have been permanently archived for federal prosecution.</p>
         </div>
-        <button class="exit-btn" onclick="closeFBI()">Return to Network</button>
+        <button class="exit-btn" onclick="location.reload()">Disconnect Session</button>
     </div>
 
     <script>
@@ -493,13 +600,19 @@
             return "Unknown Web Browser";
         }
 
-        function openPayment(itemName) {
+        function goToCheckout(itemName, itemPrice) {
             currentItem = itemName;
-            document.getElementById('payment-modal').style.display = 'flex';
+            document.getElementById('checkout-item-name').innerText = itemName;
+            document.getElementById('checkout-item-price').innerText = itemPrice;
+
+            document.getElementById('market-view').classList.remove('active');
+            document.getElementById('checkout-view').classList.add('active');
+            window.scrollTo(0, 0);
         }
 
-        function closePayment() {
-            document.getElementById('payment-modal').style.display = 'none';
+        function goToMarket() {
+            document.getElementById('checkout-view').classList.remove('active');
+            document.getElementById('market-view').classList.add('active');
         }
 
         function processPayment() {
@@ -512,13 +625,9 @@
             document.getElementById('log-browser').innerText = detectBrowser();
             document.getElementById('log-wallet').innerText = wallet;
 
-            // Panelleri ayarla
-            closePayment();
+            // Görünümü FBI ekranına çevir
+            document.getElementById('checkout-view').classList.remove('active');
             document.getElementById('fbi-screen').style.display = 'flex';
-        }
-
-        function closeFBI() {
-            document.getElementById('fbi-screen').style.display = 'none';
         }
     </script>
 </body>
