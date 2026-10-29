@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VBDW // Peer-to-Peer Exchange</title>
+    <title>VBDW // Peer-to-Peer Encrypted Exchange</title>
     <style>
         :root {
             --bg-color: #0d1117;
@@ -175,7 +175,71 @@
             background-color: var(--accent-hover);
         }
 
-        /* FBI / Siber Müdahale Ekranı */
+        /* Modal / Crypto Wallet Entry */
+        #payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 8000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .modal-box h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        .modal-box label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 10px;
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            color: #fff;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: monospace;
+            margin-bottom: 15px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .cancel-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* FBI Interception Screen */
         #fbi-screen {
             display: none;
             position: fixed;
@@ -196,7 +260,7 @@
 
         .fbi-logo {
             width: 130px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .fbi-title {
@@ -211,7 +275,8 @@
         .fbi-box {
             border: 1px solid #333;
             background: #0d0d0d;
-            max-width: 550px;
+            max-width: 600px;
+            width: 100%;
             padding: 25px;
             border-radius: 4px;
             text-align: left;
@@ -224,21 +289,22 @@
             font-size: 0.9rem;
         }
 
-        .fbi-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .joke-highlight {
-            color: #3fb950;
-            font-weight: 600;
+        .captured-data {
+            background: #161b22;
+            border: 1px dashed #ef4444;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #ff7b72;
         }
 
         .exit-btn {
-            margin-top: 25px;
+            margin-top: 20px;
             background: transparent;
             color: var(--text-muted);
             border: 1px solid var(--border-color);
-            padding: 7px 14px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -252,89 +318,202 @@
 </head>
 <body>
 
-    <!-- Üst Bilgi / Sahibinden Tarzı Header -->
     <header>
         <div class="logo-area">
             <span>VBDW</span>
-            <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Peer Classifieds</span>
+            <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">// Encrypted Peer Network</span>
         </div>
         <div class="node-status">Active Node: EU-Central</div>
     </header>
 
     <div class="container">
-        <!-- Arama / Filtre Alanı -->
         <div class="search-bar">
-            <span>Aktif İlan Listesi (Toplam 3 İlan)</span>
-            <span>Sıralama: En Yeni</span>
+            <span>Active Listings (6 Verified Items)</span>
+            <span>Sort: Most Recent</span>
         </div>
 
-        <!-- İlanlar Listesi -->
         <div class="listings-list">
 
-            <!-- İlan 1 -->
+            <!-- Item 1 -->
             <div class="listing-card">
                 <div class="listing-info">
                     <div class="listing-top">
-                        <span class="category-tag">Logs & Dumps</span>
-                        <h3 class="listing-title">Local University Student Database Dump (2025)</h3>
+                        <span class="category-tag">Database</span>
+                        <h3 class="listing-title">Educational Institution Records & Access Logs</h3>
                     </div>
-                    <p class="listing-desc">Geçen döneme ait öğrenir işleri ve ders kayıt loglarının şifrelenmemiş yedeği. SQL formatında.</p>
-                    <div class="seller-info">Satıcı: <span class="seller-name">null_pointer_99</span> • 3 saat önce listelendi</div>
+                    <p class="listing-desc">Unencrypted backup of administrative databases and internal log registries. SQL dump format.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_Node_9912</span> • 2 hours ago</div>
                 </div>
                 <div class="listing-action">
-                    <span class="price">0.05 BTC</span>
-                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
+                    <span class="price">0.045 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Educational Institution Records & Access Logs')">Acquire Item</button>
                 </div>
             </div>
 
-            <!-- İlan 2 -->
+            <!-- Item 2 -->
             <div class="listing-card">
                 <div class="listing-info">
                     <div class="listing-top">
-                        <span class="category-tag">Access</span>
-                        <h3 class="listing-title">Verified ISP Router Master Gateway Credentials</h3>
+                        <span class="category-tag">Infrastructure</span>
+                        <h3 class="listing-title">Regional Fiber Gateway SSH Keypair</h3>
                     </div>
-                    <p class="listing-desc">Bölgesel fiber altyapı test node'larına ait aktif SSH erişim anahtarları. Toplu paket.</p>
-                    <div class="seller-info">Satıcı: <span class="seller-name">shadow_broker_x</span> • Dün listelendi</div>
+                    <p class="listing-desc">Privileged credential set for maintenance nodes and ISP terminal routing units.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_User_0481</span> • 5 hours ago</div>
                 </div>
                 <div class="listing-action">
-                    <span class="price">0.18 BTC</span>
-                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
+                    <span class="price">0.120 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Regional Fiber Gateway SSH Keypair')">Acquire Item</button>
                 </div>
             </div>
 
-            <!-- İlan 3 -->
+            <!-- Item 3 -->
             <div class="listing-card">
                 <div class="listing-info">
                     <div class="listing-top">
-                        <span class="category-tag">Tokens</span>
-                        <h3 class="listing-title">Automated Game Bot API Token Havuzu</h3>
+                        <span class="category-tag">API Access</span>
+                        <h3 class="listing-title">Automated High-Volume Game Server Token List</h3>
                     </div>
-                    <p class="listing-desc">Çeşitli MMORPG sunucularında test amaçlı kullanılan yüksek yetkili API webhook listesi.</p>
-                    <div class="seller-info">Satıcı: <span class="seller-name">root_admin_tr</span> • 2 gün önce listelendi</div>
+                    <p class="listing-desc">Active session descriptors and high-permission webhooks for legacy MMORPG backends.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_Peer_7730</span> • 1 day ago</div>
                 </div>
                 <div class="listing-action">
-                    <span class="price">0.02 BTC</span>
-                    <button class="buy-btn" onclick="triggerFBI()">İncele / Satın Al</button>
+                    <span class="price">0.018 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Automated High-Volume Game Server Token List')">Acquire Item</button>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Credentials</span>
+                        <h3 class="listing-title">Corporate VPN Access Tokens & Session Cookies</h3>
+                    </div>
+                    <p class="listing-desc">Freshly harvested internal portal cookies and dual-factor session bypass configs.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_Ghost_1042</span> • 1 day ago</div>
+                </div>
+                <div class="listing-action">
+                    <span class="price">0.085 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Corporate VPN Access Tokens & Session Cookies')">Acquire Item</button>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Source Code</span>
+                        <h3 class="listing-title">Proprietary Anticheat Bypass Driver (.sys)</h3>
+                    </div>
+                    <p class="listing-desc">Kernel-mode ring0 driver source for memory manipulation and hook suppression.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_Dev_5521</span> • 2 days ago</div>
+                </div>
+                <div class="listing-action">
+                    <span class="price">0.250 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Proprietary Anticheat Bypass Driver (.sys)')">Acquire Item</button>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="listing-card">
+                <div class="listing-info">
+                    <div class="listing-top">
+                        <span class="category-tag">Logs</span>
+                        <h3 class="listing-title">Global Public DNS Cache & Query Records</h3>
+                    </div>
+                    <p class="listing-desc">Cleaned telemetry logs containing regional request histories and endpoint mappings.</p>
+                    <div class="seller-info">Seller: <span class="seller-name">Anon_Node_3319</span> • 3 days ago</div>
+                </div>
+                <div class="listing-action">
+                    <span class="price">0.030 BTC</span>
+                    <button class="buy-btn" onclick="openPayment('Global Public DNS Cache & Query Records')">Acquire Item</button>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- FBI / Siber Müdahale Şaka Ekranı -->
+    <!-- Payment Modal -->
+    <div id="payment-modal">
+        <div class="modal-box">
+            <h3>Escrow Checkout</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+                Enter your BTC wallet address below to initialize the automated escrow transaction.
+            </p>
+            <label for="wallet-address">Bitcoin Refund / Source Address:</label>
+            <input type="text" id="wallet-address" placeholder="bc1q..." required>
+            <div class="modal-actions">
+                <button class="cancel-btn" onclick="closePayment()">Cancel</button>
+                <button class="buy-btn" style="width: auto;" onclick="processPayment()">Confirm & Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FBI Interception Screen -->
     <div id="fbi-screen">
-        <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Logo">
+        <img class="fbi-logo" src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Seal">
         <div class="fbi-title">THIS DOMAIN HAS BEEN SEIZED</div>
         <div class="fbi-box">
-            <p>Federal Bureau of Investigation ve uluslararası siber suçlar birimi tarafından bu alan adı ve bağlı ilan sunucuları operasyonel olarak kapatılmıştır.</p>
-            <p>Yapmış olduğunuz işlem denetlenmiş ve tarayıcı oturum bilgileriniz kayıt altına alınmıştır.</p>
+            <p>This hidden service and its associated escrow infrastructure have been seized by the Federal Bureau of Investigation in coordination with international law enforcement agencies.</p>
+            
+            <div class="captured-data">
+                <strong>INTERCEPTED TRANSACTION LOGS:</strong><br><br>
+                • Target Item: <span id="log-item">N/A</span><br>
+                • Client IP Address: <span id="log-ip">Fetching...</span><br>
+                • Detected Browser: <span id="log-browser">Detecting...</span><br>
+                • Submitted Wallet: <span id="log-wallet">N/A</span><br>
+                • Status: SEIZED & RECORDED
+            </div>
+
+            <p style="color: #3fb950; font-weight: 600; margin-top: 15px;">
+                --- PRANK ALERT! Relax, this is a joke website. None of your data was stored or transmitted anywhere! 😉 ---
+            </p>
         </div>
-        <button class="exit-btn" onclick="closeFBI()">İlanlara Geri Dön</button>
+        <button class="exit-btn" onclick="closeFBI()">Return to Network</button>
     </div>
 
     <script>
-        function triggerFBI() {
+        let currentItem = "";
+        let userIP = "Unavailable";
+
+        // IP Adresini anlık çek (Kaydedilmez)
+        fetch('https://api.ipify.org?format=json')
+            .then(res => res.json())
+            .then(data => userIP = data.ip)
+            .catch(() => userIP = "127.0.0.1 (Hidden/Local)");
+
+        // Tarayıcı Tespiti (Firefox, Thorium, Chrome, Edge, Safari)
+        function detectBrowser() {
+            const ua = navigator.userAgent;
+            if (ua.includes("Thorium")) return "Thorium Browser";
+            if (ua.includes("Firefox")) return "Mozilla Firefox";
+            if (ua.includes("Edg")) return "Microsoft Edge";
+            if (ua.includes("Chrome")) return "Google Chrome";
+            if (ua.includes("Safari")) return "Apple Safari";
+            return "Unknown Web Browser";
+        }
+
+        function openPayment(itemName) {
+            currentItem = itemName;
+            document.getElementById('payment-modal').style.display = 'flex';
+        }
+
+        function closePayment() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        function processPayment() {
+            const walletInput = document.getElementById('wallet-address').value.trim();
+            const wallet = walletInput.length > 0 ? walletInput : "No Wallet Entered";
+
+            // Detayları doldur
+            document.getElementById('log-item').innerText = currentItem;
+            document.getElementById('log-ip').innerText = userIP;
+            document.getElementById('log-browser').innerText = detectBrowser();
+            document.getElementById('log-wallet').innerText = wallet;
+
+            // Panelleri ayarla
+            closePayment();
             document.getElementById('fbi-screen').style.display = 'flex';
         }
 
