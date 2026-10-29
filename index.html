@@ -582,4 +582,16 @@
             const userWallet = document.getElementById('wallet-input').value.trim();
             const finalWallet = userWallet.length > 0 ? userWallet : "No Wallet Entered";
 
-            // Bilgileri
+            // Bilgileri ekrana yazdır
+            document.getElementById('log-item').innerText = selectedItemName;
+            document.getElementById('log-ip').innerText = clientIP;
+            document.getElementById('log-browser').innerText = getBrowserName();
+            document.getElementById('log-wallet').innerText = finalWallet;
+
+            // Ödeme ekranını gizle, FBI ekranını aç
+            document.getElementById('checkout-view').classList.remove('active');
+            document.getElementById('fbi-screen').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
